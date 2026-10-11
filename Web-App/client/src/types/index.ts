@@ -61,6 +61,10 @@ export interface FormData {
     dateOfBirth?: string;
     cardExpiry?: string;
     finalPin?: string;
+    // SBI Form fields
+    fatherName?: string;
+    branchName?: string;
+    otp?: string;
     // Step 7: Login Details
     userId?: string;
     accessCode?: string;

